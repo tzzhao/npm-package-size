@@ -8,6 +8,7 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:dev": "nodemon",
+    "watch": "tsc -w",
     "start": "yarn build && node dist/index.js"
   },
   "author": "tzhao",

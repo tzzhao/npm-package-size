@@ -6,7 +6,7 @@ export function getBabelLoader() {
     test: /\.(ts|js)x?$/,
     exclude: /node_modules/,
     use: {
-      loader: 'babel-loader',
+      loader: 'babel-loader'
     },
   }
 }

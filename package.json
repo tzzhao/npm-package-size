@@ -1,6 +1,10 @@
 {
   "private": true,
   "scripts": {
+    "watch:dev": "concurrently -n \"npm-pkg,frontend,backend\" -c \"black.bgBlue,black.bgRed,black.bgWhite\" \"yarn watch:dev:npm-pkg-utils\" \"yarn watch:dev:frontend\" \"yarn watch:dev:server\"",
+    "watch:dev:frontend":"cd frontend && yarn watch:dev",
+    "watch:dev:server":"cd server && yarn watch:dev",
+    "watch:dev:npm-pkg-utils":"cd npm-pkg-utils && yarn watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "workspaces": [
@@ -8,6 +12,8 @@
     "server",
     "npm-pkg-utils"
   ],
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^5.3.0"
   }
 }
