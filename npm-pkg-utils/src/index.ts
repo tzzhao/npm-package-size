@@ -1,7 +1,8 @@
 import {buildPackage, getVersions} from './build-package';
 
 export * from './build-package';
-export * from './command-utils'
+export * from './command-utils';
+export * from './interfaces';
 
 export async function getLatestVersionsAndSize(packageName: string) {
   return getVersions(packageName).then(async (versions) => {
