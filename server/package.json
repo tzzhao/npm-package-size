@@ -4,8 +4,24 @@
   "description": "Server bundling npm package and returning its sizes",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:dev": "nodemon",
+    "start": "yarn build && node dist/index.js"
   },
   "author": "tzhao",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.8",
+    "express": "^4.17.1",
+    "npm-pkg-utils": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.10.1",
+    "@types/semver": "^7.3.3",
+    "eslint": "^7.7.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  }
 }
