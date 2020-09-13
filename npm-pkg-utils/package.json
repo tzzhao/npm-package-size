@@ -1,0 +1,41 @@
+{
+  "name": "npm-pkg-utils",
+  "version": "0.0.1",
+  "description": "Bundle and minify npm package, and compute its gzipped size",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:dev": "nodemon",
+    "start": "yarn build && node dist/index.js"
+  },
+  "author": "tzhao",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.10.1",
+    "@types/npm": "^2.0.31",
+    "@types/semver": "^7.3.3",
+    "eslint": "^7.7.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.7.6",
+    "builtin-modules": "^3.1.0",
+    "css-loader": "^4.2.1",
+    "csso-webpack-plugin": "^2.0.0-beta.1",
+    "escape-string-regexp": "^4.0.0",
+    "file-loader": "^6.0.0",
+    "memory-fs": "^0.5.0",
+    "mini-css-extract-plugin": "^0.10.0",
+    "npm": "^6.14.8",
+    "sanitize-filename": "^1.6.3",
+    "sass-loader": "^9.0.3",
+    "semver": "^7.3.2",
+    "shebang-loader": "^0.0.1",
+    "terser-webpack-plugin": "^2.3.5",
+    "webpack": "^4.44.1"
+  }
+}
