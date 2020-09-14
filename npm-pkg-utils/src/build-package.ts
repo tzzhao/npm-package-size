@@ -3,21 +3,28 @@ import * as path from 'path';
 import {executeCommand} from './command-utils';
 import {PackageInformation} from './interfaces';
 import {PackageError} from './models';
-import {compile} from './webpack-compile';
+import {compileAndGetSizes} from './webpack-compile';
 
 const tmpFolderPath = path.join('..','..','tmp');
 
-export async function buildPackage(packageName: string, packageVersion: string): Promise<PackageInformation> {
+export async function buildPackageAndGetSizes(packageName: string, packageVersion: string): Promise<PackageInformation> {
   const packageNameAndVersion: string = `${packageName}@${packageVersion}`;
+
+  // Get path to temp folder in which we should build the package
   const buildPath: string = await getBuildPathAndCreateFolders(packageName, packageVersion);
 
+  // Run yarn add {packageName} to create the package.json and install the deps in node_modules
   try {
     await addPackageDependency(packageNameAndVersion, buildPath);
   } catch ({error}) {
     throw new PackageError({name:'AddDependencyError', message:`Failed to add dependencies for ${packageName}@${packageVersion}`}, packageName, packageVersion);
   }
+
+  // Create the entry file that should be provided to webpack
   const entryFilePath: string = createEntryFile(buildPath, packageName);
-  return await compile(packageName, packageVersion, buildPath, entryFilePath);
+
+  // Webpack bundle + gzip to get the minified and gzipped sizes
+  return await compileAndGetSizes(packageName, packageVersion, buildPath, entryFilePath);
 }
 
 async function getBuildPathAndCreateFolders(packageName: string, packageVersion: string): Promise<string> {
@@ -31,7 +38,6 @@ async function getBuildPathAndCreateFolders(packageName: string, packageVersion:
     return nextFolderPath;
   }, new Promise<string>((resolve) => resolve('')));
 }
-
 
 function createEntryFile(buildPath: string, packageName: string): string {
   const entryFilePath = path.join(buildPath, 'index.js');

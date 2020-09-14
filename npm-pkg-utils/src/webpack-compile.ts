@@ -1,5 +1,4 @@
 import * as path from 'path';
-import {Stats} from 'webpack';
 import webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -12,11 +11,21 @@ import {PackageError} from './models';
 const builtInModules = require('builtin-modules');
 const escapeRegex = require('escape-string-regexp');
 
-export async function compile(packageName: string, packageVersion: string, buildPath: string, entryFilePath: string)
+/**
+ * Compiles a minified bundle with webpack in memory. Gzip it with zlib. Then compute the resulting sizes.
+ * @param packageName
+ * @param packageVersion
+ * @param buildPath
+ * @param entryFilePath
+ */
+export async function compileAndGetSizes(packageName: string, packageVersion: string, buildPath: string, entryFilePath: string)
 : Promise<PackageInformation> {
+  // Prepare webpack builder
   const webpackBuilder = webpack(getWebpackConfig(packageName, buildPath, entryFilePath));
   const memoryFileSystem = new MemoryFS();
   webpackBuilder.outputFileSystem = memoryFileSystem;
+
+  // Call webpack to bundle the package with minification
   const {err}: {err: Error} = await new Promise((resolve, reject) => {
     webpackBuilder.run((err: any) => {
       resolve({err});
@@ -27,9 +36,8 @@ export async function compile(packageName: string, packageVersion: string, build
     throw new PackageError(err, packageName, packageVersion);
   }
 
-  const bundlePath = path.join(process.cwd(), 'dist', 'bundle.js');
-
   try {
+    const bundlePath = path.join(process.cwd(), 'dist', 'bundle.js');
     const bundle = memoryFileSystem.readFileSync(bundlePath);
     const gzip = gzipSync(bundle);
 
@@ -43,6 +51,12 @@ export async function compile(packageName: string, packageVersion: string, build
   }
 }
 
+/**
+ * Generate the webpack config
+ * @param packageName
+ * @param buildPath
+ * @param entryFilePath
+ */
 function getWebpackConfig(packageName: string, buildPath: string, entryFilePath: string): webpack.Configuration {
   const externals = getExternals(packageName, path.join(__dirname, '..', buildPath));
   const externalsRegex = makeExternalsRegex(externals.peerDependencies);
@@ -154,6 +168,11 @@ function getWebpackConfig(packageName: string, buildPath: string, entryFilePath:
   };
 }
 
+/**
+ * Compute peer dependencies and dependencies provided by the environment to later exclude them from the webpack build
+ * @param packageName
+ * @param installPath
+ */
 function getExternals(packageName: string, installPath: string): PackageExternalDependencies {
   const packageJSONPath = path.join(
       installPath,
@@ -175,6 +194,7 @@ function getExternals(packageName: string, installPath: string): PackageExternal
     builtInDependencies,
   }
 }
+
 function makeExternalsRegex(externals: string[]) {
   let externalsRegex = externals
       .map(dep => `^${escapeRegex(dep)}$|^${escapeRegex(dep)}\\/`)

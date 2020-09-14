@@ -3,9 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect, Provider} from 'react-redux';
 import {createStore, Store} from 'redux';
-import GlobalError from './components/Error/GlobalError';
+import {GlobalError} from './components/Error/GlobalError';
 import {Loading} from './components/Loading/Loading';
-import PackageInfoGraph from './components/PackageInfoGraph/PackageInfoGraph';
+import {PackageInfoGraph} from './components/PackageInfoGraph/PackageInfoGraph';
 import {Search} from './components/Search/Search';
 import {LoadingAction, SetErrorActionPayloadAction, SetPackageInformationAction} from './store/actions';
 import {reducer} from './store/reducers';
@@ -36,17 +36,17 @@ const onSearch = (packageName: string) => {
       .catch(error => store.dispatch(SetErrorActionPayloadAction(error)));
 };
 
-let App: React.FC<Partial<AppProperties>> = props => {
-  let element;
+const AppNotConnected: React.FC<Partial<AppProperties>> = props => {
+  let mainSectionElement;
   switch(props.state) {
     case PackageState.LOADING:
-      element = <Loading/>;
+      mainSectionElement = <Loading/>;
       break;
     case PackageState.ERROR:
-      element = <GlobalError/>;
+      mainSectionElement = <GlobalError/>;
       break;
     default:
-      element = <PackageInfoGraph />;
+      mainSectionElement = <PackageInfoGraph />;
   }
   return (
       <div>
@@ -57,17 +57,17 @@ let App: React.FC<Partial<AppProperties>> = props => {
         </div>
         <Search onSearch={onSearch}/>
         <div className="display-container">
-          {element}
+          {mainSectionElement}
         </div>
       </div>
   )
 };
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToAppProps = (state: RootState) => {
   return { state: state.state};
 };
 
-App = connect(mapStateToProps)(App);
+const App = connect(mapStateToAppProps)(AppNotConnected);
 
 ReactDOM.render(
     <Provider store={store}>

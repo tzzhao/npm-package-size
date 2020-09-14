@@ -4,14 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bundle": "webpack",
+    "build": "webpack --mode production --env.DEVTOOL=source-maps --env.outputDir=../server/dist/public",
+    "start": "webpack-dev-server --mode development --open --hot",
+    "watch": "webpack --mode development --watch --env.outputDir='../server/dist/dev/public'",
     "test": "jest",
     "lint": "eslint --ext .ts,.tsx src/ buildscripts/ webpack.config.babel.ts",
-    "lint-fix": "eslint --ext .ts,.tsx --fix src/ buildscripts/ webpack.config.babel.ts",
-    "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production --env.DEVTOOL=source-maps",
-    "watch:dev": "webpack --mode development --watch --env.outputDir='../server/dist/dev/public'",
-    "check-types": "tsc"
+    "lint-fix": "eslint --ext .ts,.tsx --fix src/ buildscripts/ webpack.config.babel.ts"
   },
   "keywords": [],
   "author": "tzhao",

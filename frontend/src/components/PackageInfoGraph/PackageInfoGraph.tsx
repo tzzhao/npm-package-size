@@ -10,7 +10,7 @@ export interface PackageInfoGraphProperties {
   packagesInformation: PackageInformation[]
 }
 
-let PackageInfoGraph: React.FC<Partial<PackageInfoGraphProperties>> = props => {
+const PackageInfoGraphNotConnected: React.FC<Partial<PackageInfoGraphProperties>> = props => {
     const pkgInfos = props.packagesInformation!.filter(info => info.size);
 
     const {biggestPackageSize, failedPackages} = getBiggestPackageSizeAndFailedPackages(props.packagesInformation!);
@@ -70,12 +70,10 @@ function computeBarProperties(pkgInfos: PackageInformation[], maxSize: number): 
       }, []);
 }
 
-const mapStateToProps  = (state: RootState) => {
+const mapStateToPackageInfoGraphProps  = (state: RootState) => {
   return {
     packagesInformation: state.packageInfos
   };
 };
 
-PackageInfoGraph = connect(mapStateToProps)(PackageInfoGraph);
-
-export default PackageInfoGraph;
+export const PackageInfoGraph = connect(mapStateToPackageInfoGraphProps)(PackageInfoGraphNotConnected);

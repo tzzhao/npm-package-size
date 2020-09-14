@@ -7,7 +7,7 @@ export const Loading: React.FC = () => {
   const [step, setStep] = React.useState(0);
   useEffect(() => {
     if (step < 2) {
-      const timeoutId = setTimeout(() => setStep(step + 1), 5000);
+      const timeoutId = setTimeout(() => setStep(step + 1), 3500);
       // If the component unmounts, clear the timeout
       return () => {
         clearTimeout(timeoutId);
