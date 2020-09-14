@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "yarn build && node server/dist/index.js",
+    "start": "yarn build && cd server && node dist/index.js",
     "clean": "rimraf -- ./npm-pkg-utils/dist && rimraf -- ./server/dist && rimraf -- ./frontend/dist",
     "build": "yarn clean && cd npm-pkg-utils && yarn build && cd ../frontend && yarn build && cd ../server && yarn build",
     "watch:dev": "concurrently -n \"npm-pkg,frontend,backend\" -c \"black.bgBlue,black.bgRed,black.bgWhite\" \"yarn watch:npm-pkg-utils\" \"yarn watch:frontend\" \"yarn watch:server\"",
