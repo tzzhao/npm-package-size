@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test error is displayed properly on global error - SNAPSHOT 1`] = `
+<div
+  className="global-error"
+>
+  The following error occurred: [
+  GlobalError
+  ] 
+  [global error message]
+</div>
+`;

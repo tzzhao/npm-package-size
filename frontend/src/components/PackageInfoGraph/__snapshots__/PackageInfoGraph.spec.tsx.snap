@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test package info graph with 1 missing package information 1`] = `
+<div>
+  <div
+    className="bar-graph"
+  >
+    <div
+      className="bars-container"
+    >
+      <div
+        aria-describedby={null}
+        className="bar"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#2B547E",
+            "height": "100%",
+          }
+        }
+        title="Minified size: 15.20kB"
+      />
+      <div
+        aria-describedby={null}
+        className="bar"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#659EC7",
+            "height": "0.7893178977833323%",
+          }
+        }
+        title="Gzipped size: 120B"
+      />
+    </div>
+    <div
+      className="bars-legend-container"
+    >
+      <div
+        className="bar-legend"
+      >
+        package@1.0.1 (minified)
+      </div>
+      <div
+        className="bar-legend"
+      >
+        package@1.0.1 (gzipped)
+      </div>
+    </div>
+  </div>
+  <div
+    className="bar-graph-error"
+  >
+    An issue occurred while processing the following packages: package@1.0.2
+  </div>
+</div>
+`;
+
+exports[`Test package info graph with 2 package information 1`] = `
+<div>
+  <div
+    className="bar-graph"
+  >
+    <div
+      className="bars-container"
+    >
+      <div
+        aria-describedby={null}
+        className="bar"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#2B547E",
+            "height": "0.009986783064441788%",
+          }
+        }
+        title="Minified size: 15.20kB"
+      />
+      <div
+        aria-describedby={null}
+        className="bar"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#659EC7",
+            "height": "0.00007882746614043377%",
+          }
+        }
+        title="Gzipped size: 120B"
+      />
+      <div
+        aria-describedby={null}
+        className="bar"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#2B547E",
+            "height": "100%",
+          }
+        }
+        title="Minified size: 152.23MB"
+      />
+      <div
+        aria-describedby={null}
+        className="bar"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#659EC7",
+            "height": "0.08034489486363712%",
+          }
+        }
+        title="Gzipped size: 122.31kB"
+      />
+    </div>
+    <div
+      className="bars-legend-container"
+    >
+      <div
+        className="bar-legend"
+      >
+        package@1.0.1 (minified)
+      </div>
+      <div
+        className="bar-legend"
+      >
+        package@1.0.1 (gzipped)
+      </div>
+      <div
+        className="bar-legend"
+      >
+        package@1.2.1 (minified)
+      </div>
+      <div
+        className="bar-legend"
+      >
+        package@1.2.1 (gzipped)
+      </div>
+    </div>
+  </div>
+  
+</div>
+`;

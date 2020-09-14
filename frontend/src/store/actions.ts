@@ -23,7 +23,7 @@ export const SetPackageInformationAction = (packageInfos: PackageInformation[]) 
   }
 });
 
-export const SetErrorActionPayloadAction = (globalError: Error) => ({
+export const SetErrorAction = (globalError: Error) => ({
   type: SET_ERROR,
   payload: {
     state: PackageState.ERROR,

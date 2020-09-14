@@ -10,7 +10,7 @@ export interface SearchProperties {
 
 const preventFormSubmitFunction = (e: FormEvent) => {e.preventDefault();};
 
-export const SearchNotConnected: React.FC<Partial<SearchProperties>> = (props: SearchProperties) => {
+export const SearchNotConnected: React.FC<Partial<SearchProperties>> = (props: Partial<SearchProperties>) => {
   const initialPackage: string = 'react';
 
   const [state, setState] = React.useState({
@@ -20,7 +20,7 @@ export const SearchNotConnected: React.FC<Partial<SearchProperties>> = (props: S
 
   const searchOnSubmit = (e: FormEvent) => {
     e.preventDefault();
-    props.onSearch(state.packageName);};
+    props.onSearch!(state.packageName);};
 
   const handleChange: any = (event: React.FormEvent<HTMLInputElement>) => {
     setState({...state, packageName: event.currentTarget.value});
@@ -30,7 +30,7 @@ export const SearchNotConnected: React.FC<Partial<SearchProperties>> = (props: S
     if (props.state === PackageState.LOADING) {
       if (!state.searchDisabled) setState({...state, searchDisabled: true});
     } else if (state.searchDisabled) {
-      setState({...state, searchDisabled: ''});
+      setState({...state, searchDisabled: false});
     }
   });
 
