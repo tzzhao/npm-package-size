@@ -58,7 +58,7 @@ export async function compileAndGetSizes(packageName: string, packageVersion: st
  * @param entryFilePath
  */
 function getWebpackConfig(packageName: string, buildPath: string, entryFilePath: string): webpack.Configuration {
-  const externals = getExternals(packageName, path.join(__dirname, '..', buildPath));
+  const externals = getExternals(packageName, buildPath);
   const externalsRegex = makeExternalsRegex(externals.peerDependencies);
   const isExternalRequest = (request: string) => {
     const isPeerDep = externals.peerDependencies.length

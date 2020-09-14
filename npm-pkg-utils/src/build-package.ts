@@ -5,7 +5,7 @@ import {PackageInformation} from './interfaces';
 import {PackageError} from './models';
 import {compileAndGetSizes} from './webpack-compile';
 
-const tmpFolderPath = path.join('..','..','tmp');
+const tmpFolderPath = path.resolve('..','..','tmp');
 
 export async function buildPackageAndGetSizes(packageName: string, packageVersion: string): Promise<PackageInformation> {
   const packageNameAndVersion: string = `${packageName}@${packageVersion}`;
