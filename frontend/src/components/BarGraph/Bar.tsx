@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {Tooltip} from '@material-ui/core';
 
 export interface BarProperties {
@@ -8,7 +8,7 @@ export interface BarProperties {
   name: string;
 }
 
-export function Bar(props: BarProperties) {
+export function Bar(props: BarProperties): ReactElement {
   return (
       <Tooltip title={props.description}>
         <div className="bar" style={{height: props.height, backgroundColor: props.color}} />

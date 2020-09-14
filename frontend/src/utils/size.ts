@@ -1,4 +1,4 @@
-const kB: number = 1000;
+const kB = 1000;
 const MB: number = 1000 * kB;
 
 export function getDisplaySize(size: number): string {

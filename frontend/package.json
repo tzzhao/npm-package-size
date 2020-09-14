@@ -8,8 +8,8 @@
     "start": "webpack-dev-server --mode development --open --hot",
     "watch": "webpack --mode development --watch --env.outputDir='../server/dist/dev/public'",
     "test": "jest",
-    "lint": "eslint --ext .ts,.tsx src/ buildscripts/ webpack.config.babel.ts",
-    "lint-fix": "eslint --ext .ts,.tsx --fix src/ buildscripts/ webpack.config.babel.ts"
+    "lint": "eslint --ext .ts,.tsx src/",
+    "lint-fix": "eslint --ext .ts,.tsx --fix src/"
   },
   "keywords": [],
   "author": "tzhao",

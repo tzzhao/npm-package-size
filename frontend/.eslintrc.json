@@ -19,6 +19,12 @@
   ],
   "rules": {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-    "@typescript-eslint/no-var-requires": "off"
+    "@typescript-eslint/no-var-requires": "off",
+    // This raises linter issues despite the prop interface being provided
+    "react/prop-types": "off",
+    // the use of redux store makes it complex to not use non null assertion and keep typed properties
+    "@typescript-eslint/no-non-null-assertion": "off",
+    // To be used with care, but sometimes when libraries types are off we don't have a choice
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

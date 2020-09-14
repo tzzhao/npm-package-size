@@ -3,6 +3,10 @@ import * as React from 'react';
 
 const steps: string[] = ['Installing dependencies', 'Compiling package', 'Computing bundle size'];
 
+const emptyFunctionOnUnmount = () => {
+  // do nothing
+};
+
 export const Loading: React.FC = () => {
   const [step, setStep] = React.useState(0);
   useEffect(() => {
@@ -13,7 +17,7 @@ export const Loading: React.FC = () => {
         clearTimeout(timeoutId);
       }
     }
-    return () => {};
+    return emptyFunctionOnUnmount;
   });
   return (
       <div className="loading-container">

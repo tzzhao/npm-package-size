@@ -4,14 +4,14 @@ import {connect} from 'react-redux';
 import {PackageState, RootState} from '../../store/state';
 
 export interface SearchProperties {
-  onSearch: Function,
+  onSearch: (name: string) => void,
   state: PackageState
 }
 
 const preventFormSubmitFunction = (e: FormEvent) => {e.preventDefault();};
 
 export const SearchNotConnected: React.FC<Partial<SearchProperties>> = (props: Partial<SearchProperties>) => {
-  const initialPackage: string = 'react';
+  const initialPackage = 'react';
 
   const [state, setState] = React.useState({
     packageName: initialPackage,

@@ -57,7 +57,7 @@ test('Test package info graph is empty when package infos are empty', async () =
   expect(loadingText.innerHTML).toEqual('Installing dependencies');
 
   // Check search button is disabled
-  let disabledSearch: Element = container!.querySelector('.disabled-search')!;
+  const disabledSearch: Element = container!.querySelector('.disabled-search')!;
   expect(disabledSearch).toBeTruthy();
 
   act(() => {

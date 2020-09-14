@@ -3,8 +3,8 @@ import {LoadingAction, SetErrorAction, SetPackageInformationAction} from '../../
 
 export const TestLoadingAction = LoadingAction();
 
-export const TEST_ERROR_NAME: string = 'GlobalError';
-export const TEST_ERROR_MESSAGE: string = '[global error message]';
+export const TEST_ERROR_NAME = 'GlobalError';
+export const TEST_ERROR_MESSAGE = '[global error message]';
 export const TestSetErrorAction = SetErrorAction({name: TEST_ERROR_NAME, message: TEST_ERROR_MESSAGE});
 
 export const TestSetEmptyPackageInformationAction = SetPackageInformationAction([]);

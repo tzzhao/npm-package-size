@@ -31,7 +31,7 @@ const PackageInfoGraphNotConnected: React.FC<Partial<PackageInfoGraphProperties>
 function getBiggestPackageSizeAndFailedPackages(packagesInformation: PackageInformation[])
     : {biggestPackageSize: number, failedPackages: string[]} {
   const failedPackages: string[] = [];
-  let maxSize: number = 0;
+  let maxSize = 0;
   for (const pkgInfo of packagesInformation) {
     const pkgSize: number = pkgInfo.size;
     if (!pkgSize) {
@@ -46,7 +46,7 @@ function getBiggestPackageSizeAndFailedPackages(packagesInformation: PackageInfo
 function computeBarProperties(pkgInfos: PackageInformation[], maxSize: number): BarProperties[] {
     return pkgInfos
       .reduce((barsProps: BarProperties[], currentBarProp: PackageInformation) => {
-        const name: string = `${currentBarProp.pkgName}@${currentBarProp.pkgVersion}`;
+        const name = `${currentBarProp.pkgName}@${currentBarProp.pkgVersion}`;
         const size: number = currentBarProp.size;
         barsProps.push(
             {
