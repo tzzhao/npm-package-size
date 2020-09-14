@@ -8,8 +8,6 @@ export interface SearchProperties {
   state: PackageState
 }
 
-const preventFormSubmitFunction = (e: FormEvent) => {e.preventDefault();};
-
 export const SearchNotConnected: React.FC<Partial<SearchProperties>> = (props: Partial<SearchProperties>) => {
   const initialPackage = 'react';
 
@@ -51,6 +49,8 @@ export const SearchNotConnected: React.FC<Partial<SearchProperties>> = (props: P
       </form>
       );
 };
+
+const preventFormSubmitFunction = (e: FormEvent) => {e.preventDefault();};
 
 const mapStateToSearchErrorProps = (state: RootState) => {
   return {

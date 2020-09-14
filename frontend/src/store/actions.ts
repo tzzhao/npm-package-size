@@ -1,10 +1,14 @@
 import {PackageInformation} from 'npm-pkg-utils';
-import {Action} from 'redux';
-import {PackageState} from './state';
+import {PackageState, RootState} from './state';
 
 export const SET_LOADING = 'SET_LOADING';
 export const SET_PACKAGE_INFOS = 'SET_PACKAGE_INFOS';
 export const SET_ERROR = 'SET_ERROR';
+
+export interface Action {
+  type: string,
+  payload: RootState
+}
 
 export const LoadingAction: () => Action = () => ({
   type: SET_LOADING,
