@@ -1,3 +1,32 @@
-h1 {
-  color: blue;
+body {
+  color: #2B547E;
 }
+
+#root {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.header {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.display-container{
+  height: 430px;
+  width: 430px;
+}
+
+.global-error {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+@import 'bar-graph';
+@import 'search';
+@import 'loading';

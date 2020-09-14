@@ -2,6 +2,7 @@ import {PackageInformation} from 'npm-pkg-utils';
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {RootState} from '../../store/state';
+import {getDisplaySize} from '../../utils/size';
 import {BarProperties} from '../BarGraph/Bar';
 import {BarGraph} from '../BarGraph/BarGraph';
 
@@ -10,35 +11,64 @@ export interface PackageInfoGraphProperties {
 }
 
 let PackageInfoGraph: React.FC<Partial<PackageInfoGraphProperties>> = props => {
-    const pkgInfo: PackageInformation[] = props.packagesInformation!;
-    const maxSize: number = Math.max.apply(null, pkgInfo.map(info => info.size));
-    const barsProps: BarProperties[] = pkgInfo
-        .reduce((barsProps: BarProperties[], currentBarProp: PackageInformation) => {
-          const name: string = `${currentBarProp.name}@${currentBarProp.version}`;
+    const pkgInfos = props.packagesInformation!.filter(info => info.size);
 
-          const size: number = currentBarProp.size;
-          barsProps.push(
-              {
-                height: `${size / maxSize * 100}%`,
-                width: '50px',
-                description: `Minified size: ${size}`,
-                name
-              }
-          );
+    const {biggestPackageSize, failedPackages} = getBiggestPackageSizeAndFailedPackages(props.packagesInformation!);
 
-          const gzipSize: number = currentBarProp.gzip;
-          barsProps.push(
-              {
-                height: `${gzipSize / maxSize * 100}%`,
-                width: '50px',
-                description: `${gzipSize}`,
-                name
-              }
-          );
-          return barsProps;
-        }, []);
-    return <BarGraph barsProps={barsProps}/>;
+    const failedPackagesMessage =
+        failedPackages.length > 0 ? `An issue occurred while processing the following packages: ${failedPackages.join(', ')}` : '';
+
+    const barsProps = computeBarProperties(pkgInfos, biggestPackageSize);
+
+    return (
+        <div>
+          <BarGraph barsProps={barsProps}/>
+          {failedPackagesMessage ? <div className="bar-graph-error">{failedPackagesMessage}</div> : ''}
+        </div>
+    );
 };
+
+function getBiggestPackageSizeAndFailedPackages(packagesInformation: PackageInformation[])
+    : {biggestPackageSize: number, failedPackages: string[]} {
+  const failedPackages: string[] = [];
+  let maxSize: number = 0;
+  for (const pkgInfo of packagesInformation) {
+    const pkgSize: number = pkgInfo.size;
+    if (!pkgSize) {
+      failedPackages.push(`${pkgInfo.pkgName}@${pkgInfo.pkgVersion}`);
+    } else {
+      maxSize = Math.max(pkgSize, maxSize);
+    }
+  }
+  return {biggestPackageSize: maxSize, failedPackages};
+}
+
+function computeBarProperties(pkgInfos: PackageInformation[], maxSize: number): BarProperties[] {
+    return pkgInfos
+      .reduce((barsProps: BarProperties[], currentBarProp: PackageInformation) => {
+        const name: string = `${currentBarProp.pkgName}@${currentBarProp.pkgVersion}`;
+        const size: number = currentBarProp.size;
+        barsProps.push(
+            {
+              height: `${size * 100 / maxSize}%`,
+              description: `Minified size: ${getDisplaySize(size)}`,
+              name: `${name} (minified)`,
+              color: '#2B547E'
+            }
+        );
+
+        const gzipSize: number = currentBarProp.gzip;
+        barsProps.push(
+            {
+              height: `${gzipSize * 100 / maxSize}%`,
+              description: `Gzipped size: ${getDisplaySize(gzipSize)}`,
+              name: `${name} (gzipped)`,
+              color: '#659EC7'
+            }
+        );
+        return barsProps;
+      }, []);
+}
 
 const mapStateToProps  = (state: RootState) => {
   return {

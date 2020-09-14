@@ -3,7 +3,7 @@ import {Tooltip} from '@material-ui/core';
 
 export interface BarProperties {
   height: string;
-  width: string;
+  color: string
   description: string;
   name: string;
 }
@@ -11,6 +11,6 @@ export interface BarProperties {
 export function Bar(props: BarProperties) {
   return (
       <Tooltip title={props.description}>
-        <div style={{height: props.height, width: props.width}} />
+        <div className="bar" style={{height: props.height, backgroundColor: props.color}} />
       </Tooltip>);
 }

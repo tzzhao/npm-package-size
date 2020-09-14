@@ -1,4 +1,4 @@
 export interface PackageBaseInfo {
-  name: string,
-  version: string
+  pkgName: string,
+  pkgVersion: string
 }

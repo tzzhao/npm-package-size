@@ -1,25 +1,86 @@
 import * as npm from 'npm';
+import {PackageError} from './models';
 import semver = require('semver/preload');
+import SemVer = require('semver/classes/semver');
 
+/**
+ * Get all published versions of a package
+ * @param packageName
+ */
+export async function getVersions(packageName: string): Promise<string[]>  {
+  const versionList: string[] = await new Promise((resolve, reject) => {
+    view(packageName, (error: PackageError, version: string, moduleInfo: any) => {
+      if (error) return reject(error);
+      console.log(moduleInfo);
+      resolve(moduleInfo.versions);
+    });
+  });
+  const versionsToPackage: string[] = getLatestVersions(versionList);
+  console.log('****************** Versions ***********************');
+  console.log(versionsToPackage);
+
+  return versionsToPackage;
+}
+
+/**
+ * Get the last 3 non pre-release versions of a package as well as the previous major version
+ * @param orderedVersionList
+ */
+function getLatestVersions(orderedVersionList: string[]): string[] {
+  const nbVersions = orderedVersionList.length;
+  let lastMajorVersion = undefined;
+  let listVersionsToProcess: string[] = [];
+
+  for (let i = nbVersions - 1; i >= 0; i--) {
+    const version = orderedVersionList[i];
+    const semVersion: null | SemVer = semver.coerce(version);
+    const isPrerelease = version.indexOf('-') > -1;
+
+    // Ignore pre releases
+    if (!semVersion || isPrerelease) continue;
+
+    const currentMajorVersion = semVersion.major;
+
+    if (listVersionsToProcess.length < 3) {
+      // Take the 3 last published versions
+      lastMajorVersion = currentMajorVersion;
+      listVersionsToProcess.push(version);
+    } else {
+      // Look for the latest versimon from the previous major
+      if (lastMajorVersion === currentMajorVersion) continue;
+      listVersionsToProcess.push(version);
+      break;
+    }
+  }
+
+  return listVersionsToProcess;
+}
+
+/**
+ * Programmatically call npm view.
+ * Adaptation of https://www.npmjs.com/package/npmview which was using a very old version of npm
+ * @param name
+ * @param cb
+ */
 export function view(name: string, cb: Function) {
   if (!name.length)
-    return new Error('Bad name parameter, empty string.');
+    return new PackageError({message: 'Package name should not be an empty string.', name: 'EmptyPackageNameError'}, name, '');
 
   npm.load({ loglevel: 'silent' }, function (err) {
 
     if (err) return cb(err);
 
-    const silent = true;      // make npm not chatty on stdout
+    const silent = true;
     npm.commands.view([name], silent, function (err, data) {
       if (err) return cb(err);
-      if (!data) return cb(new Error('No data received.'));
+      if (!data) return cb(new PackageError({message: 'Npm package not found', name: 'NpmPackageNotError'}, name, ''));
 
       for (const p in data) {
         if (!data.hasOwnProperty(p) ||!semver.valid(p))
           continue;
         return cb(null, p, data[p]);
       }
-      return cb(new Error('Bad data received: ' + data));
+      return cb(new PackageError({message: `Bad data received: ${JSON.stringify(data)}`, name: 'NpmViewBadDataError'}, name, ''));
     });
   });
 }

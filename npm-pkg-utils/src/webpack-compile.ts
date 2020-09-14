@@ -8,6 +8,7 @@ const MemoryFS = require('memory-fs');
 import {gzipSync} from 'zlib';
 import {PackageExternalDependencies} from './interfaces/PackageExternalDependencies';
 import {PackageInformation} from './interfaces/PackageInformation';
+import {PackageError} from './models';
 const builtInModules = require('builtin-modules');
 const escapeRegex = require('escape-string-regexp');
 
@@ -16,21 +17,30 @@ export async function compile(packageName: string, packageVersion: string, build
   const webpackBuilder = webpack(getWebpackConfig(packageName, buildPath, entryFilePath));
   const memoryFileSystem = new MemoryFS();
   webpackBuilder.outputFileSystem = memoryFileSystem;
-  const {stats, err}: {stats: Stats, err: Error} = await new Promise((resolve, reject) => {
-    webpackBuilder.run((err: any, stats) => {
-      resolve({stats, err});
+  const {err}: {err: Error} = await new Promise((resolve, reject) => {
+    webpackBuilder.run((err: any) => {
+      resolve({err});
     });
   });
 
-  const bundlePath = path.join(process.cwd(), 'dist', 'bundle.js');
-  const bundle = memoryFileSystem.readFileSync(bundlePath);
-  const gzip = gzipSync(bundle);
+  if (err) {
+    throw new PackageError(err, packageName, packageVersion);
+  }
 
-  return {
-    name: packageName,
-    version: packageVersion,
-    gzip: gzip.length,
-    size: bundle.length}
+  const bundlePath = path.join(process.cwd(), 'dist', 'bundle.js');
+
+  try {
+    const bundle = memoryFileSystem.readFileSync(bundlePath);
+    const gzip = gzipSync(bundle);
+
+    return {
+      pkgName: packageName,
+      pkgVersion: packageVersion,
+      gzip: gzip.length,
+      size: bundle.length}
+  } catch (error) {
+    throw new PackageError(error, packageName, packageVersion);
+  }
 }
 
 function getWebpackConfig(packageName: string, buildPath: string, entryFilePath: string): webpack.Configuration {

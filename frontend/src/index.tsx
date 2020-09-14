@@ -3,6 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect, Provider} from 'react-redux';
 import {createStore, Store} from 'redux';
+import GlobalError from './components/Error/GlobalError';
+import {Loading} from './components/Loading/Loading';
 import PackageInfoGraph from './components/PackageInfoGraph/PackageInfoGraph';
 import {Search} from './components/Search/Search';
 import {LoadingAction, SetErrorActionPayloadAction, SetPackageInformationAction} from './store/actions';
@@ -16,18 +18,47 @@ type AppProperties = {
 }
 
 const onSearch = (packageName: string) => {
-  store.dispatch(new LoadingAction());
+  store.dispatch(LoadingAction());
   fetch(`/getLatestPackagesSize?packageName=${packageName}`)
       .then(response => response.json())
-      .then(data => store.dispatch(new SetPackageInformationAction(data as PackageInformation[])))
-      .catch(error => store.dispatch(new SetErrorActionPayloadAction(error)));
+      .then(data => {
+        if (Array.isArray(data) && (data as Array<any>).some(el => el.size)) {
+          // Expected response should be an array of PackageInformation with positive sizes
+          store.dispatch(SetPackageInformationAction(data as PackageInformation[]));
+        } else if (data.name) {
+          // If the error was caught and returned by the backend, it should contain a name
+          store.dispatch(SetErrorActionPayloadAction(data));
+        } else {
+          // Generic error case
+          store.dispatch(SetErrorActionPayloadAction({name: 'GenericError', message: `There was an issue processing ${packageName}`}));
+        }
+      })
+      .catch(error => store.dispatch(SetErrorActionPayloadAction(error)));
 };
 
-let App: React.FC<Partial<AppProperties>> = () => {
+let App: React.FC<Partial<AppProperties>> = props => {
+  let element;
+  switch(props.state) {
+    case PackageState.LOADING:
+      element = <Loading/>;
+      break;
+    case PackageState.ERROR:
+      element = <GlobalError/>;
+      break;
+    default:
+      element = <PackageInfoGraph />;
+  }
   return (
       <div>
+        <div className="header">
+          <h1>Find npm package sizes</h1>
+          <div>Search for npm packages minified and bundled sizes.</div>
+          <div>Hover on the histogram to get the sizes</div>
+        </div>
         <Search onSearch={onSearch}/>
-        <PackageInfoGraph />
+        <div className="display-container">
+          {element}
+        </div>
       </div>
   )
 };

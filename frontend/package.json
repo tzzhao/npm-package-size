@@ -10,7 +10,7 @@
     "lint-fix": "eslint --ext .ts,.tsx --fix src/ buildscripts/ webpack.config.babel.ts",
     "start": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production --env.DEVTOOL=source-maps",
-    "watch:dev": "webpack --watch --env.outputDir='../server/dist/dev/public'",
+    "watch:dev": "webpack --mode development --watch --env.outputDir='../server/dist/dev/public'",
     "check-types": "tsc"
   },
   "keywords": [],

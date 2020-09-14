@@ -6,8 +6,9 @@ type SearchProperties = {
 };
 
 export const Search: React.FC<SearchProperties> = (props) => {
+  const initialPackage: string = 'react';
   const [state, setState] = React.useState({
-    packageName: ''
+    packageName: initialPackage
   });
   const handleChange: any = (event: React.FormEvent<HTMLInputElement>) => {
     setState({packageName: event.currentTarget.value});
@@ -15,9 +16,9 @@ export const Search: React.FC<SearchProperties> = (props) => {
 
   return (
       <form>
-        <div>
-          <TextField required id="package-field" label="Package name" defaultValue="Hello World" onChange={handleChange}/>
-          <Button variant="outlined" color="primary" disableElevation onClick={props.onSearch(state.packageName)}>
+        <div className="search-container">
+          <TextField className="search-text-field" required id="package-field" label="Package name" defaultValue={initialPackage} onChange={handleChange}/>
+          <Button className="search-submit" variant="outlined" color="primary" disableElevation onClick={() => props.onSearch(state.packageName)}>
             Search
           </Button>
         </div>

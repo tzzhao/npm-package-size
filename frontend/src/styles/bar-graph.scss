@@ -1,0 +1,43 @@
+$barWidth: 50px;
+
+.bar-graph {
+  width: 400px;
+  height: 400px;
+  padding: 15px;
+}
+
+.bars-container, .bars-legend-container {
+  width: 100%;
+}
+
+.bars-container {
+  height: 80%;
+}
+
+.bars-legend-container {
+  height: 20%;
+}
+
+.bar {
+  display: inline-block;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  width: $barWidth;
+}
+
+.bar-legend {
+  display: inline-block;
+  writing-mode: tb-rl;
+  width: $barWidth;
+  padding-top: 5px;
+}
+
+.bar-graph-error {
+  top: 250px;
+  position: absolute;
+  margin-left: 460px;
+  width: 360px;
+  color: white;
+  background-color: rgb(67 118 171);
+  padding: 10px 12px;
+}

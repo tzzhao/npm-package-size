@@ -10,14 +10,21 @@ const app = express();
 app.use('/static', express.static(publicRoot));
 
 app.get('/getLatestPackagesSize', async (req: any, res: any) => {
-  const response = await getLatestPackagesSize(req.query.packageName);
-  res.send(response);
+  try {
+    const response = await getLatestPackagesSize(req.query.packageName);
+    res.send(response);
+  } catch (e) {
+    res.send(e);
+  }
 });
 
 async function getLatestPackagesSize(packageName: string) {
-  return await getLatestVersionsAndSize(packageName);
+  try {
+    return await getLatestVersionsAndSize(packageName);
+  } catch (e) {
+    return e;
+  }
+
 }
 
-const server = app.listen(3000, function() {
-
-});
+const server = app.listen(3000, function() {});

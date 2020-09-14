@@ -7,7 +7,7 @@ export enum PackageState {
 export interface RootState {
   state: PackageState,
   packageInfos: PackageInformation[],
-  globalError: any | undefined
+  globalError: Error | undefined
 }
 
 export const initialState: RootState = {
