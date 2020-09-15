@@ -32,7 +32,7 @@ const AppNotConnected: React.FC<Partial<AppProperties>> = props => {
           <div>Search for npm packages minified and bundled sizes.</div>
           <div>Hover on the histogram to get the sizes</div>
         </div>
-        <Search onSearch={onSearch}/>
+        <Search onSearch={onSearch} disabled={props.state === PackageState.LOADING}/>
         <div className="display-container">
           {mainSectionElement}
         </div>
