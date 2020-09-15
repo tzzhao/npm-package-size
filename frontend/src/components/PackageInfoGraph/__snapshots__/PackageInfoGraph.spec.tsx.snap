@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test package info graph with 1 missing package information 1`] = `
+exports[`Test package info graph with 1 missing package information - SNAPSHOT 1`] = `
 <div>
   <div
     className="bar-graph"
@@ -66,7 +66,7 @@ exports[`Test package info graph with 1 missing package information 1`] = `
 </div>
 `;
 
-exports[`Test package info graph with 2 package information 1`] = `
+exports[`Test package info graph with 2 package information - SNAPSHOT 1`] = `
 <div>
   <div
     className="bar-graph"

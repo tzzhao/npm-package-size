@@ -1,4 +1,4 @@
-import {store} from '../../store';
+import {Dispatch} from 'redux';
 import {PackageState, RootState} from "../../store/state";
 import {LoadingAction, SetErrorAction, SetPackageInformationAction} from "../../store/actions";
 import {PackageInformation} from "npm-pkg-utils";
@@ -7,7 +7,7 @@ import {Loading} from "../Loading/Loading";
 import {GlobalError} from "../Error/GlobalError";
 import {PackageInfoGraph} from "../PackageInfoGraph/PackageInfoGraph";
 import {Search} from "../Search/Search";
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 
 type AppProperties = {
   state: PackageState
@@ -25,6 +25,9 @@ const AppNotConnected: React.FC<Partial<AppProperties>> = props => {
     default:
       mainSectionElement = <PackageInfoGraph />;
   }
+
+  const dispatch = useDispatch();
+
   return (
       <div>
         <div className="header">
@@ -32,7 +35,11 @@ const AppNotConnected: React.FC<Partial<AppProperties>> = props => {
           <div>Search for npm packages minified and bundled sizes.</div>
           <div>Hover on the histogram to get the sizes</div>
         </div>
-        <Search onSearch={onSearch} disabled={props.state === PackageState.LOADING}/>
+        <Search onSearch={onSearch(dispatch)}
+                defaultValue="react"
+                disabled={props.state === PackageState.LOADING}
+                disabledTooltipMessage="Wait for the current request to end before making a new one"
+                inputName="Package name"/>
         <div className="display-container">
           {mainSectionElement}
         </div>
@@ -40,25 +47,26 @@ const AppNotConnected: React.FC<Partial<AppProperties>> = props => {
   )
 };
 
-const onSearch: any = (packageName: string) => {
-  store.dispatch(LoadingAction());
-  fetch(`/getLatestPackagesSize?packageName=${packageName}`)
-      .then(response => response.json())
-      .then(data => {
-        if (Array.isArray(data) && (data as Array<any>).some(el => el.size)) {
-          // Expected response should be an array of PackageInformation with positive sizes
-          store.dispatch(SetPackageInformationAction(data as PackageInformation[]));
-        } else if (data.name) {
-          // If the error was caught and returned by the backend, it should contain a name
-          store.dispatch(SetErrorAction(data));
-        } else {
-          // Generic error case
-          store.dispatch(SetErrorAction({name: 'GenericError', message: `There was an issue processing ${packageName}`}));
-        }
-      })
-      .catch(error => store.dispatch(SetErrorAction(error)));
-};
-
+function onSearch(dispatch: Dispatch): (packageName: string) => void {
+  return (packageName: string) => {
+    dispatch(LoadingAction());
+    fetch(`/getLatestPackagesSize?packageName=${packageName}`)
+        .then(response => response.json())
+        .then(data => {
+          if (Array.isArray(data) && (data as Array<any>).some(el => el.size)) {
+            // Expected response should be an array of PackageInformation with positive sizes
+            dispatch(SetPackageInformationAction(data as PackageInformation[]));
+          } else if (data.name) {
+            // If the error was caught and returned by the backend, it should contain a name
+            dispatch(SetErrorAction(data));
+          } else {
+            // Generic error case
+            dispatch(SetErrorAction({name: 'GenericError', message: `There was an issue processing ${packageName}`}));
+          }
+        })
+        .catch(error => dispatch(SetErrorAction(error)));
+  }
+}
 
 const mapStateToAppProps = (state: RootState) => {
   return { state: state.state};

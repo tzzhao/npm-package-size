@@ -1,6 +1,7 @@
 import {render, RenderResult} from '@testing-library/react';
 import {PackageError, PackageInformation} from 'npm-pkg-utils';
 import * as React from 'react';
+import {act} from 'react-test-renderer';
 import {Provider} from 'react-redux';
 import renderer from 'react-test-renderer';
 import {createStore, Store} from 'redux';
@@ -17,13 +18,18 @@ import {PackageInfoGraph} from './PackageInfoGraph';
 const store: Store = createStore(reducer, initialState);
 
 test('Test package info graph is empty when package infos are empty', () => {
-  store.dispatch(TestSetEmptyPackageInformationAction);
+  act(() => {
+    store.dispatch(TestSetEmptyPackageInformationAction);
+  });
+
   const renderResult: RenderResult = render(<Provider store={store}><PackageInfoGraph /></Provider>);
   expect(renderResult.baseElement.textContent).toBe("");
 });
 
 test('Test package info graph with 2 package information - SNAPSHOT', () => {
-  store.dispatch(TestSetPackageInformationAction);
+  act(() => {
+    store.dispatch(TestSetPackageInformationAction);
+  });
 
   const component = renderer.create(<Provider store={store}><PackageInfoGraph /></Provider>);
   const tree = component.toJSON();
@@ -37,7 +43,10 @@ test('Test package info graph with 1 missing package information - SNAPSHOT', ()
     name: 'NpmError',
     message: 'Some error message'
   };
-  store.dispatch(SetPackageInformationAction([TEST_PACKAGE_INFO_1, MISSING_PACKAGE_ERROR as any as PackageInformation]));
+
+  act(() => {
+    store.dispatch(SetPackageInformationAction([TEST_PACKAGE_INFO_1, MISSING_PACKAGE_ERROR as any as PackageInformation]));
+  });
 
   const component = renderer.create(<Provider store={store}><PackageInfoGraph /></Provider>);
   const tree = component.toJSON();

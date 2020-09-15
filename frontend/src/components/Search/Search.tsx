@@ -3,14 +3,15 @@ import React, {FormEvent} from 'react';
 
 export interface SearchProperties {
   onSearch: (name: string) => void,
-  disabled: boolean
+  disabled: boolean,
+  disabledTooltipMessage: string,
+  inputName: string,
+  defaultValue: string
 }
 
 export const Search: React.FC<Partial<SearchProperties>> = (props: Partial<SearchProperties>) => {
-  const initialPackage = 'react';
-
   const [state, setState] = React.useState({
-    packageName: initialPackage
+    packageName: props.defaultValue || ''
   });
 
   const searchOnSubmit = (e: FormEvent) => {
@@ -27,8 +28,8 @@ export const Search: React.FC<Partial<SearchProperties>> = (props: Partial<Searc
   return (
       <form onSubmit={searchOnSubmit}>
         <div className="search-container">
-          <TextField className="search-text-field" required id="package-field" label="Package name" defaultValue={initialPackage} onChange={handleChange}/>
-          <Tooltip title={props.disabled ? 'Wait for the current request to end before making a new one' : ''}>
+          <TextField className="search-text-field" required label={props.inputName} defaultValue={props.defaultValue} onChange={handleChange}/>
+          <Tooltip title={props.disabled ? props.disabledTooltipMessage! : ''}>
             <div className={'search-button-wrapper'}>
               <Button type="submit" className="search-submit" variant="outlined" disabled={props.disabled} color={props.disabled ? undefined : 'primary'}>Search</Button>
             </div>

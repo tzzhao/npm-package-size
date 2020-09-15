@@ -111,7 +111,6 @@ _The tool doesn't return the same sizes as bundlephobia (beyond the fact that th
 bundlephobia has 1kiB-1024B, the sizes in bytes differ as well)
 _The backend suffers when a lot of requests are made simultaneously (concurrent access to the disk to install 
 package dependencies, as well as bundling in memory.
-_The App.spec.tsx isn't working properly.
 ## Next Steps
 _Ideally use workers as bundlephobia
 _Write e2e tests in selenium for the frontend. Write unit tests for the backend.
