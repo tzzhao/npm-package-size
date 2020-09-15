@@ -67,7 +67,8 @@ async function addPackageDependency(packageNameAndVersion: string, path: string)
     'silent',
     'no-lockfile',
     'no-bin-links',
-    'ignore-optional'
+    'ignore-optional',
+    'mutex file'
   ];
   const command = `yarn add ${packageNameAndVersion} --${flags.join(' --')}`;
   return executeCommand(command, {cwd: path});
