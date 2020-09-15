@@ -72,7 +72,7 @@ export function view(name: string, cb: Function) {
 
     const silent = true;
     npm.commands.view([name], silent, function (err, data) {
-      if (err) return cb(err);
+      if (err) return cb(new PackageError({message: err.message, name: `NpmViewError`}, name, ''));
       if (!data) return cb(new PackageError({message: 'Npm package not found', name: 'NpmPackageNotError'}, name, ''));
 
       for (const p in data) {
