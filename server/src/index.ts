@@ -25,4 +25,4 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 const server = app.listen(3000, function() {});
-server.setTimeout(60000);
+server.setTimeout(600000);
