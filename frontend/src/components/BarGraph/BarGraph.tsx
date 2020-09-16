@@ -3,6 +3,7 @@ import {Bar, BarProperties} from './Bar';
 
 export interface BarGraphProps {
   barsProps: BarProperties[],
+  title: string
 }
 
 export function BarGraph(props: BarGraphProps): ReactElement {
@@ -14,6 +15,7 @@ export function BarGraph(props: BarGraphProps): ReactElement {
   });
   return (
       <div className="bar-graph">
+        <div className="bar-graph-title">{props.title}</div>
         <div className="bars-container">
           {bars}
         </div>

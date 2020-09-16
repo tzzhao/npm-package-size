@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import {Tooltip} from '@material-ui/core';
 
 export interface BarProperties {
@@ -9,8 +9,19 @@ export interface BarProperties {
 }
 
 export function Bar(props: BarProperties): ReactElement {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, 10);
+    return () => clearTimeout(timer);
+  });
+
   return (
-      <Tooltip title={props.description}>
-        <div className="bar" style={{height: props.height, backgroundColor: props.color}} />
-      </Tooltip>);
+      <div className="bar-container" >
+        <Tooltip title={props.description}>
+          <div className="bar" style={{height: (show ? props.height : 0), marginTop: (show? 0 : props.height), backgroundColor: props.color}} />
+        </Tooltip>
+      </div>);
 }

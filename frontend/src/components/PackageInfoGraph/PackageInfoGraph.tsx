@@ -22,7 +22,7 @@ const PackageInfoGraphNotConnected: React.FC<Partial<PackageInfoGraphProperties>
 
     return (
         <div>
-          <BarGraph barsProps={barsProps}/>
+          <BarGraph barsProps={barsProps} title={props.packagesInformation![0]?.pkgName}/>
           {failedPackagesMessage ? <div className="bar-graph-error">{failedPackagesMessage}</div> : ''}
         </div>
     );
@@ -46,7 +46,7 @@ function getBiggestPackageSizeAndFailedPackages(packagesInformation: PackageInfo
 function computeBarProperties(pkgInfos: PackageInformation[], maxSize: number): BarProperties[] {
     return pkgInfos
       .reduce((barsProps: BarProperties[], currentBarProp: PackageInformation) => {
-        const name = `${currentBarProp.pkgName}@${currentBarProp.pkgVersion}`;
+        const name = currentBarProp.pkgVersion;
         const size: number = currentBarProp.size;
         barsProps.push(
             {
