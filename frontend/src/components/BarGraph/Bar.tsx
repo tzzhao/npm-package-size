@@ -20,7 +20,7 @@ export function Bar(props: BarProperties): ReactElement {
 
   return (
       <div className="bar-container" >
-        <Tooltip title={props.description}>
+        <Tooltip title={props.description} arrow placement="top">
           <div className="bar" style={{height: (show ? props.height : 0), marginTop: (show? 0 : props.height), backgroundColor: props.color}} />
         </Tooltip>
       </div>);
