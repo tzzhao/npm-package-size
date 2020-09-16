@@ -107,7 +107,8 @@ Some unit tests were written as well as a few snapshot tests with jest. Unfortun
 
 ## Limitations
 + The tool fails to build some packages sometimes likely due to node/npm/yarn/webpack versions and maybe sometimes 
-because the webpack configuration doesn't cover all the project cases.
+because the webpack configuration doesn't cover all the project cases. Sometimes yarn fails to concurrently add 
+dependencies.
 + The tool doesn't return the same sizes as bundlephobia (beyond the fact that the project uses 1kB=1000B while 
 bundlephobia has 1kiB-1024B, the sizes in bytes differ as well)
 + The backend suffers when a lot of requests are made simultaneously (concurrent access to the disk to install 
