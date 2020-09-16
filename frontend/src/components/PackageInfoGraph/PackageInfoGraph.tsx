@@ -1,4 +1,4 @@
-import {PackageInformation} from 'npm-pkg-utils';
+import {PackageError, PackageInformation} from 'npm-pkg-utils';
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {RootState} from '../../store/state';
@@ -35,7 +35,7 @@ function getBiggestPackageSizeAndFailedPackages(packagesInformation: PackageInfo
   for (const pkgInfo of packagesInformation) {
     const pkgSize: number = pkgInfo.size;
     if (!pkgSize) {
-      failedPackages.push(`${pkgInfo.pkgName}@${pkgInfo.pkgVersion}`);
+      failedPackages.push(`${pkgInfo.pkgName}@${pkgInfo.pkgVersion} (${(pkgInfo as any as PackageError).name})`);
     } else {
       maxSize = Math.max(pkgSize, maxSize);
     }

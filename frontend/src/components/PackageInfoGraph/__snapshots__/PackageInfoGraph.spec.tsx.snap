@@ -61,7 +61,7 @@ exports[`Test package info graph with 1 missing package information - SNAPSHOT 1
   <div
     className="bar-graph-error"
   >
-    An issue occurred while processing the following packages: package@1.0.2
+    An issue occurred while processing the following packages: package@1.0.2 (NpmError)
   </div>
 </div>
 `;
