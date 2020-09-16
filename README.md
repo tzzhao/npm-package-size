@@ -85,6 +85,7 @@ updated on ajax calls:
 + state (INITIAL, LOADING, READY, ERROR)
 + globalError
 + list of PackageInformation
+
 3 actions can update the state:
 + Loading Action: when a request to the backend is launched => clear PackageInformation and globalError, enters the 
 LOADING state
@@ -92,6 +93,7 @@ LOADING state
 enters the READY state
 + Set Error Action: when the request failed to find the package or on internet issue => set the global error, enters 
 the ERROR state
+
 The Histogram, error panel and app (to show/hide the loading) are bound to the state changes to display their data. 
 The Search panel initiates the state change by triggering the ajax call but also listens to the state change to 
 enable/disable its search button.
@@ -101,21 +103,20 @@ processing on state/property change (useEffects). Mainly it was used for:
 + Search panel: to store the value of the package name text field
 + Loading state: to update its message every 3.5s so that the user feels his request is progressing. 
 ##### unit tests
-Some unit tests were written as well as a few snapshot tests. Unfortunately not all components are covered and the 
-App.spec.tsx is failing. 
+Some unit tests were written as well as a few snapshot tests with jest. Unfortunately not all components were tested.
 
 ## Limitations
-_The tool fails to build some packages sometimes likely due to node/npm/yarn/webpack versions and maybe sometimes 
++ The tool fails to build some packages sometimes likely due to node/npm/yarn/webpack versions and maybe sometimes 
 because the webpack configuration doesn't cover all the project cases.
-_The tool doesn't return the same sizes as bundlephobia (beyond the fact that the project uses 1kB=1000B while 
++ The tool doesn't return the same sizes as bundlephobia (beyond the fact that the project uses 1kB=1000B while 
 bundlephobia has 1kiB-1024B, the sizes in bytes differ as well)
-_The backend suffers when a lot of requests are made simultaneously (concurrent access to the disk to install 
++ The backend suffers when a lot of requests are made simultaneously (concurrent access to the disk to install 
 package dependencies, as well as bundling in memory.
 ## Next Steps
-_Ideally use workers as bundlephobia
-_Write e2e tests in selenium for the frontend. Write unit tests for the backend.
-_Have a database to store the results of the package bundles. Populate it with the most common packages 
++ Ideally use workers as bundlephobia
++ Write e2e tests in selenium for the frontend. Write unit tests for the backend.
++ Have a database to store the results of the package bundles. Populate it with the most common packages 
 information so that the server should most of the time fetch the info from the database and only occasionally build 
 packages
-_Check why the bundle sizes aren't the same as the ones on bundlephobia
-_Add fancy features such as the auto complete dropdown to propose packages given the user input
++ Check why the bundle sizes aren't the same as the ones on bundlephobia
++ Add fancy features such as the auto complete dropdown to propose packages given the user input
