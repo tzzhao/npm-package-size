@@ -120,4 +120,3 @@ package dependencies, as well as bundling in memory.
 information so that the server should most of the time fetch the info from the database and only occasionally build 
 packages
 + Check why the bundle sizes aren't the same as the ones on bundlephobia
-+ Add fancy features such as the auto complete dropdown to propose packages given the user input

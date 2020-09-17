@@ -9,4 +9,11 @@ button.search-submit {
 
 .search-button-wrapper {
   display: inline-flex;
+  vertical-align: middle;
+}
+
+.search-text-field {
+  vertical-align: middle;
+  display: inline-block;
+  width: 50%;
 }

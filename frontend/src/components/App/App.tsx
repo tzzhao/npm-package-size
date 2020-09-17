@@ -6,8 +6,8 @@ import React from "react";
 import {Loading} from "../Loading/Loading";
 import {GlobalError} from "../Error/GlobalError";
 import {PackageInfoGraph} from "../PackageInfoGraph/PackageInfoGraph";
-import {Search} from "../Search/Search";
 import {connect, useDispatch} from 'react-redux';
+import {PackageSearch} from '../PackageSearch/PackageSearch';
 
 type AppProperties = {
   state: PackageState
@@ -35,7 +35,7 @@ const AppNotConnected: React.FC<Partial<AppProperties>> = props => {
           <div>Search for npm packages minified and bundled sizes.</div>
           <div>Hover on the histogram to get the sizes</div>
         </div>
-        <Search onSearch={onSearch(dispatch)}
+        <PackageSearch onSearch={onSearch(dispatch)}
                 defaultValue="react"
                 disabled={props.state === PackageState.LOADING}
                 disabledTooltipMessage="Wait for the current request to end before making a new one"

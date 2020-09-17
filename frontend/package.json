@@ -56,6 +56,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "add": "^2.0.6",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",

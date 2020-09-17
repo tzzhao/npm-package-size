@@ -6,42 +6,57 @@ exports[`Test package info graph with 1 missing package information - SNAPSHOT 1
     className="bar-graph"
   >
     <div
+      className="bar-graph-title"
+    >
+      package
+    </div>
+    <div
       className="bars-container"
     >
       <div
-        aria-describedby={null}
-        className="bar"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onTouchEnd={[Function]}
-        onTouchStart={[Function]}
-        style={
-          Object {
-            "backgroundColor": "#2B547E",
-            "height": "100%",
+        className="bar-container"
+      >
+        <div
+          aria-describedby={null}
+          className="bar"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#2B547E",
+              "height": "100%",
+              "marginTop": 0,
+            }
           }
-        }
-        title="Minified size: 15.20kB"
-      />
+          title="Minified size: 15.20kB"
+        />
+      </div>
       <div
-        aria-describedby={null}
-        className="bar"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onTouchEnd={[Function]}
-        onTouchStart={[Function]}
-        style={
-          Object {
-            "backgroundColor": "#659EC7",
-            "height": "0.7893178977833323%",
+        className="bar-container"
+      >
+        <div
+          aria-describedby={null}
+          className="bar"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#659EC7",
+              "height": "0.7893178977833323%",
+              "marginTop": 0,
+            }
           }
-        }
-        title="Gzipped size: 120B"
-      />
+          title="Gzipped size: 120B"
+        />
+      </div>
     </div>
     <div
       className="bars-legend-container"
@@ -49,12 +64,12 @@ exports[`Test package info graph with 1 missing package information - SNAPSHOT 1
       <div
         className="bar-legend"
       >
-        package@1.0.1 (minified)
+        1.0.1 (minified)
       </div>
       <div
         className="bar-legend"
       >
-        package@1.0.1 (gzipped)
+        1.0.1 (gzipped)
       </div>
     </div>
   </div>
@@ -72,76 +87,101 @@ exports[`Test package info graph with 2 package information - SNAPSHOT 1`] = `
     className="bar-graph"
   >
     <div
+      className="bar-graph-title"
+    >
+      package
+    </div>
+    <div
       className="bars-container"
     >
       <div
-        aria-describedby={null}
-        className="bar"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onTouchEnd={[Function]}
-        onTouchStart={[Function]}
-        style={
-          Object {
-            "backgroundColor": "#2B547E",
-            "height": "0.009986783064441788%",
+        className="bar-container"
+      >
+        <div
+          aria-describedby={null}
+          className="bar"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#2B547E",
+              "height": "0.009986783064441788%",
+              "marginTop": 0,
+            }
           }
-        }
-        title="Minified size: 15.20kB"
-      />
+          title="Minified size: 15.20kB"
+        />
+      </div>
       <div
-        aria-describedby={null}
-        className="bar"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onTouchEnd={[Function]}
-        onTouchStart={[Function]}
-        style={
-          Object {
-            "backgroundColor": "#659EC7",
-            "height": "0.00007882746614043377%",
+        className="bar-container"
+      >
+        <div
+          aria-describedby={null}
+          className="bar"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#659EC7",
+              "height": "0.00007882746614043377%",
+              "marginTop": 0,
+            }
           }
-        }
-        title="Gzipped size: 120B"
-      />
+          title="Gzipped size: 120B"
+        />
+      </div>
       <div
-        aria-describedby={null}
-        className="bar"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onTouchEnd={[Function]}
-        onTouchStart={[Function]}
-        style={
-          Object {
-            "backgroundColor": "#2B547E",
-            "height": "100%",
+        className="bar-container"
+      >
+        <div
+          aria-describedby={null}
+          className="bar"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#2B547E",
+              "height": "100%",
+              "marginTop": 0,
+            }
           }
-        }
-        title="Minified size: 152.23MB"
-      />
+          title="Minified size: 152.23MB"
+        />
+      </div>
       <div
-        aria-describedby={null}
-        className="bar"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onTouchEnd={[Function]}
-        onTouchStart={[Function]}
-        style={
-          Object {
-            "backgroundColor": "#659EC7",
-            "height": "0.08034489486363712%",
+        className="bar-container"
+      >
+        <div
+          aria-describedby={null}
+          className="bar"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#659EC7",
+              "height": "0.08034489486363712%",
+              "marginTop": 0,
+            }
           }
-        }
-        title="Gzipped size: 122.31kB"
-      />
+          title="Gzipped size: 122.31kB"
+        />
+      </div>
     </div>
     <div
       className="bars-legend-container"
@@ -149,22 +189,22 @@ exports[`Test package info graph with 2 package information - SNAPSHOT 1`] = `
       <div
         className="bar-legend"
       >
-        package@1.0.1 (minified)
+        1.0.1 (minified)
       </div>
       <div
         className="bar-legend"
       >
-        package@1.0.1 (gzipped)
+        1.0.1 (gzipped)
       </div>
       <div
         className="bar-legend"
       >
-        package@1.2.1 (minified)
+        1.2.1 (minified)
       </div>
       <div
         className="bar-legend"
       >
-        package@1.2.1 (gzipped)
+        1.2.1 (gzipped)
       </div>
     </div>
   </div>
