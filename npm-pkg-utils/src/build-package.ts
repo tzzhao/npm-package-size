@@ -17,8 +17,8 @@ export async function buildPackageAndGetSizes(packageName: string, packageVersio
   let timer: Timer = new Timer(`${packageName}@${packageVersion} Build Path and CreateFolders`);
   const [buildPath, buildPathAlreadyExists] = await getBuildPathAndCreateFolders(packageName, packageVersion);
   timer.logEndTime();
-  // Run yarn add {packageName} to create the package.json and install the deps in node_modules
 
+  // Run yarn add {packageName} to create the package.json and install the deps in node_modules
   // If build folder already exists, we assume we don't need to add the folder again (TODO: check concurrency case)
   if (!buildPathAlreadyExists) {
     timer.reset(`${packageName}@${packageVersion} Add dependencies`);
@@ -33,8 +33,8 @@ export async function buildPackageAndGetSizes(packageName: string, packageVersio
     }
   }
 
-  timer.reset(`${packageName}@${packageVersion} webpack build`);
   // Create the entry file that should be provided to webpack
+  timer.reset(`${packageName}@${packageVersion} webpack build`);
   const entryFilePath: string = createEntryFile(buildPath, packageName);
 
   // Webpack bundle + gzip to get the minified and gzipped sizes

@@ -106,15 +106,17 @@ processing on state/property change (useEffects). Mainly it was used for:
 Some unit tests were written as well as a few snapshot tests with jest. Unfortunately not all components were tested.
 
 ## Limitations
-+ The tool fails to build some packages sometimes likely due to node/npm/yarn/webpack versions and maybe sometimes 
-because the webpack configuration doesn't cover all the project cases. Sometimes yarn fails to concurrently add 
-dependencies.
++ The tool fails to build some packages when:
+  + no main file is declared in the package.json (E.g. npm package for type definition)
+  + node/npm/yarn/webpack versions are not compatible
+  + the webpack configuration isn't applicable for the project.
 + The tool doesn't return the same sizes as bundlephobia (beyond the fact that the project uses 1kB=1000B while 
 bundlephobia has 1kiB-1024B, the sizes in bytes differ as well)
 + The backend suffers when a lot of requests are made simultaneously (concurrent access to the disk to install 
-package dependencies, as well as bundling in memory.
+package dependencies, as well as bundling in memory).
 ## Next Steps
-+ Ideally use workers as bundlephobia
++ ~~Ideally use workers as bundlephobia~~ Worker threads only sligthly improve performances on webpack bundle but 
+degrades performances for concurrent yarn add. (Implementation done but not used by the UI)
 + Write e2e tests in selenium for the frontend. Write unit tests for the backend.
 + Have a database to store the results of the package bundles. Populate it with the most common packages 
 information so that the server should most of the time fetch the info from the database and only occasionally build 

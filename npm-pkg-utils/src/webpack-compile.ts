@@ -1,10 +1,12 @@
 import * as path from 'path';
+import {Stats} from 'webpack';
 import webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const MemoryFS = require('memory-fs');
 import {gzipSync} from 'zlib';
+import {logDebug} from '.';
 import {PackageExternalDependencies} from './interfaces/PackageExternalDependencies';
 import {PackageInformation} from './interfaces/PackageInformation';
 import {PackageError} from './models';
@@ -26,11 +28,16 @@ export async function compileAndGetSizes(packageName: string, packageVersion: st
   webpackBuilder.outputFileSystem = memoryFileSystem;
 
   // Call webpack to bundle the package with minification
-  const {err}: {err: Error} = await new Promise((resolve, reject) => {
-    webpackBuilder.run((err: any) => {
-      resolve({err});
+  const {err, stats}: {err: Error, stats: Stats} = await new Promise((resolve, reject) => {
+    webpackBuilder.run((err: any, stats: Stats) => {
+      resolve({err, stats});
     });
   });
+
+  if (stats.compilation.errors.length > 0) {
+    logDebug(stats.compilation.errors);
+    // throw stats.compilation.errors[0];
+  }
 
   if (err) {
     throw new PackageError(err, packageName, packageVersion);
@@ -183,6 +190,10 @@ function getExternals(packageName: string, installPath: string): PackageExternal
   const packageJSON = require(packageJSONPath);
   const dependencies = Object.keys(packageJSON.dependencies || {});
   const peerDependencies = Object.keys(packageJSON.peerDependencies || {});
+  const peerDependenciesMeta = Object.keys(packageJSON.peerDependenciesMeta || {});
+  peerDependenciesMeta.forEach((key: string) => {
+    if (peerDependencies.indexOf(key) === -1) peerDependencies.push(key);
+  });
 
   // All packages with name same as a built-in node module, but
   // haven't explicitly been added as an npm dependency are externals
