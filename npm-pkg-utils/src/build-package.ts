@@ -10,7 +10,16 @@ const rimraf = require('rimraf');
 
 const tmpFolderPath = path.resolve('..','..','tmp');
 
-export async function buildPackageAndGetSizes(packageName: string, packageVersion: string): Promise<PackageInformation> {
+export async function getPackageBundledSize(packageName: string, packageVersion: string): Promise<PackageInformation> {
+    const buildPath: string = await prepareBuildPathAndAddDependency(packageName, packageVersion);
+    return await bundlePackageAndGetSizes(packageName, packageVersion, buildPath);
+}
+/**
+ * Method to create temporary build folder and package.json with the required dependency
+ * @param packageName
+ * @param packageVersion
+ */
+export async function prepareBuildPathAndAddDependency(packageName: string, packageVersion: string): Promise<string> {
   const packageNameAndVersion: string = `${packageName}@${packageVersion}`;
 
   // Get path to temp folder in which we should build the package
@@ -23,18 +32,29 @@ export async function buildPackageAndGetSizes(packageName: string, packageVersio
   if (!buildPathAlreadyExists) {
     timer.reset(`${packageName}@${packageVersion} Add dependencies`);
     try {
-      await addPackageDependency(packageNameAndVersion, buildPath);
-    } catch ({error}) {
-      // If yarn failed to add the dependencies, we delete the temporary folder
-      rimraf(buildPath);
-      throw new PackageError({name:'AddDependencyError', message:`Failed to add dependencies for ${packageName}@${packageVersion}`}, packageName, packageVersion);
-    } finally {
+      await execAddPackageDependency(packageNameAndVersion, buildPath);
       timer.logEndTime();
+    } catch (error) {
+      // If yarn failed to add the dependencies, we delete the temporary folder
+      rimraf.sync(buildPath, {}, (error: any) => {
+        if (error) logError(`Failed to delete folder ${buildPath} ${JSON.stringify(error)}`);
+      });
+      timer.logEndTime();
+      throw new PackageError({name:'AddDependencyError', message:`Failed to add dependencies for ${packageName}@${packageVersion}`}, packageName, packageVersion);
     }
   }
+  return buildPath;
+}
 
+/**
+ * Bundle minified package and gzip (to be called after addPackageDependency)
+ * @param packageName
+ * @param packageVersion
+ * @param buildPath
+ */
+export async function bundlePackageAndGetSizes(packageName: string, packageVersion: string, buildPath: string): Promise<PackageInformation> {
   // Create the entry file that should be provided to webpack
-  timer.reset(`${packageName}@${packageVersion} webpack build`);
+  let timer: Timer = new Timer(`${packageName}@${packageVersion} webpack build`);
   const entryFilePath: string = createEntryFile(buildPath, packageName);
 
   // Webpack bundle + gzip to get the minified and gzipped sizes
@@ -91,7 +111,7 @@ async function mkdirIfNeeded(folderPath: string): Promise<boolean> {
   }
 }
 
-async function addPackageDependency(packageNameAndVersion: string, path: string) {
+async function execAddPackageDependency(packageNameAndVersion: string, path: string) {
   const flags: string[] = [
     'ignore-flags',
     'ignore-engines',

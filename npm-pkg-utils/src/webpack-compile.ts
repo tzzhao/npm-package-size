@@ -35,8 +35,7 @@ export async function compileAndGetSizes(packageName: string, packageVersion: st
   });
 
   if (stats.compilation.errors.length > 0) {
-    logDebug(stats.compilation.errors);
-    // throw stats.compilation.errors[0];
+    throw new PackageError(stats.compilation.errors[0], packageName, packageVersion);
   }
 
   if (err) {

@@ -50,7 +50,7 @@ const AppNotConnected: React.FC<Partial<AppProperties>> = props => {
 function onSearch(dispatch: Dispatch): (packageName: string) => void {
   return (packageName: string) => {
     dispatch(LoadingAction());
-    fetch(`/getLatestPackagesSize?packageName=${packageName}`)
+    fetch(`/getLatestPackagesSizeV2?packageName=${packageName}`)
         .then(response => response.json())
         .then(data => {
           if (Array.isArray(data) && (data as Array<any>).some(el => el.size)) {
