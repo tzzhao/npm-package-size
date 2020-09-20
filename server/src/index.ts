@@ -1,5 +1,11 @@
 import {Request, Response} from 'express';
-import {prepareBuildPathAndAddDependency, bundlePackageAndGetSizes, PackageError, PackageInformation} from 'npm-pkg-utils';
+import {
+  prepareBuildPathAndAddDependency,
+  bundlePackageAndGetSizes,
+  PackageError,
+  PackageInformation,
+  getPackageBundledSize,
+} from 'npm-pkg-utils';
 import {getVersions} from 'npm-pkg-utils/dist/package-versions';
 import express = require('express');
 import path = require('path');
@@ -34,6 +40,14 @@ app.get('/getLatestPackagesSizeV2', async (req: Request, res: Response) => {
     // Build package and get sizes from the worker threads
     return pool.exec('bundlePackageAndGetSizes', [packageName, version, buildPath]);
   });
+});
+
+app.get('/getPackageBundledSize', async (req: Request, res: Response) => {
+  const packageName: string = req.query.p as string;
+  const packageVersion: string = req.query.v as string;
+  pool.exec('getPackageBundledSize', [packageName, packageVersion])
+      .then((response: PackageInformation) => res.send(response))
+      .catch((e: PackageError) => res.send(e));
 });
 
 function getLatestPackageAndVersions(req: Request, res: Response, bundlePackageAndGetSizes: (packageName: string, version: string, buildPath: string) => Promise<PackageInformation>) {

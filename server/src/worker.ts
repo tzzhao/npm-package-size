@@ -1,6 +1,7 @@
 const workerpool = require("workerpool");
-import {bundlePackageAndGetSizes} from "npm-pkg-utils";
+import {bundlePackageAndGetSizes, getPackageBundledSize} from 'npm-pkg-utils';
 
 workerpool.worker({
+  getPackageBundledSize,
   bundlePackageAndGetSizes: bundlePackageAndGetSizes
 });
