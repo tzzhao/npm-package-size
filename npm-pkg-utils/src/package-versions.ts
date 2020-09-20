@@ -1,23 +1,28 @@
 import * as npm from 'npm';
 import {PackageError} from './models';
+import {Timer} from './utils';
 import semver = require('semver/preload');
 import SemVer = require('semver/classes/semver');
+import {logDebug, logInfo} from './utils/logger';
 
 /**
  * Get all published versions of a package
  * @param packageName
  */
 export async function getVersions(packageName: string): Promise<string[]>  {
+  logDebug(`npm view ${packageName} --versions -- START`);
+  const timer: Timer = new Timer(`npm view ${packageName}`);
   const versionList: string[] = await new Promise((resolve, reject) => {
     view(packageName, (error: PackageError, version: string, moduleInfo: any) => {
+      timer.logEndTime();
       if (error) return reject(error);
-      console.log(moduleInfo);
+      logInfo(moduleInfo);
       resolve(moduleInfo.versions);
     });
   });
   const versionsToPackage: string[] = getLatestVersions(versionList);
-  console.log('****************** Versions ***********************');
-  console.log(versionsToPackage);
+  logDebug('****************** Versions ***********************');
+  logDebug(versionsToPackage);
 
   return versionsToPackage;
 }
